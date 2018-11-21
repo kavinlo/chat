@@ -8,12 +8,7 @@ use App\Models\Chat;
 
 class IndexController extends Controller
 {
-    // 保存用户 如果不存在注册
-    public function index(Request $req)
-    {
-        $data = Chat::where('uname',$req->uname);
-        echo json_encode($data);
-    }
+
 
     // 保存 消息到数据库
     public function ajaxSavaMysql(Request $req)
@@ -38,26 +33,6 @@ class IndexController extends Controller
         echo json_encode([
             'code' => 200,
             'data' => $data
-        ]);
-    }
-
-    // 消息状态  0 -> 未读 1 -> 已读
-    public function isLookMysql(Request $req)
-    {
-        $status = Chat::where('sendA',$req->list)->where('reciveA',$req->user)->where('isRead','0')->count();
-        echo json_encode([
-            'code' => 200,
-            'status' => $status
-        ]);
-    }
-
-    // 设置 消息状态 未读
-    public function isNotLook(Request $req)
-    {
-        Chat::where('sendA',$req->send)->where('reciveA',$req->receive)->update(['status'=>'0']);
-        echo json_encode([
-            'code' => 200,
-            'mes' => '设置成功'
         ]);
     }
 
